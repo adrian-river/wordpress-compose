@@ -1,31 +1,36 @@
 version: "3.1"
     
 services:
-  db:
+  mysql:
     image: mysql:5.7
     volumes:
-      - db_data:/var/lib/mysql
+      - ./wordpress/mysql:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: ${MYSQL_WP_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_WP_NAME}
+      MYSQL_USER: ${MYSQL_WP_USER}
+      MYSQL_PASSWORD: ${MYSQL_WP_PASSWORD}
     
   wordpress:
     depends_on:
-      - db
+      - mysql
     image: wordpress:latest
     volumes:
-      - wordpress_data:/var/www/html
+      - ./wordpress/wp:/var/www/html
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 50M
     ports:
       - "80:80"
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: ${MYSQL_WP_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_WP_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_WP_NAME}
 
 volumes:
   db_data: {}
