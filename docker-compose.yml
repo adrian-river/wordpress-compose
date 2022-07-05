@@ -2,7 +2,7 @@ version: "3.1"
     
 services:
   mysql:
-    container_name: ${INSTALLATION_NAME} 
+    container_name: MQ_${INSTALLATION_NAME} 
     image: mysql:5.7
     volumes:
       - ./wordpress/mysql:/var/lib/mysql
@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_WP_PASSWORD}
     
   wordpress:
-    container_name: ${INSTALLATION_NAME}
+    container_name: WP_${INSTALLATION_NAME}
     depends_on:
       - mysql
     image: wordpress:latest
