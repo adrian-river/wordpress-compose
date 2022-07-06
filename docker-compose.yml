@@ -9,7 +9,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.50
+          cpus: "0.50"
           memory: 200mb
     restart: always
     environment:
@@ -28,7 +28,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.50
+          cpus: "0.50"
           memory: 200mb
     ports:
       - "${INSTALLATION_PORT}:80"
