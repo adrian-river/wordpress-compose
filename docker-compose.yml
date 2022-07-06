@@ -24,7 +24,7 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 1gb
+          memory: 200mb
     ports:
       - "${INSTALLATION_PORT}:80"
     restart: always
