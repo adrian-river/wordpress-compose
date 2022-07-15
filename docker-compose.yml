@@ -38,7 +38,24 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_WP_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_WP_PASSWORD}
       WORDPRESS_DB_NAME: ${DB_WP_NAME}
+      VIRTUAL_HOST: prueba.com
+  
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    environment:
+      DEFAULT_HOST: arcux.local
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - red
 
 volumes:
   db_data: {}
   wordpress_data: {}
+
+networks:
+  red:
+    driver: "bridge"
