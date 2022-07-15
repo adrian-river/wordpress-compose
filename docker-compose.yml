@@ -17,6 +17,8 @@ services:
       MYSQL_DATABASE: ${DB_WP_NAME}
       MYSQL_USER: ${MYSQL_WP_USER}
       MYSQL_PASSWORD: ${MYSQL_WP_PASSWORD}
+    networks:
+      - red
     
   wordpress:
     container_name: WP_${CONTAINER_NAME}
@@ -38,7 +40,7 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_WP_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_WP_PASSWORD}
       WORDPRESS_DB_NAME: ${DB_WP_NAME}
-      VIRTUAL_HOST: holaprueba.aqp.soy
+      VIRTUAL_HOST: ${WP_DNS}
     networks:
       - red
   
@@ -50,7 +52,7 @@ services:
     ports:
       - "80:80"
     environment:
-      DEFAULT_HOST: holaprueba.aqp.soy
+      DEFAULT_HOST: ${WP_DNS}
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
